@@ -1,0 +1,382 @@
+
+{{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .container{
+     display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  place-items: center;
+  min-height: 100vh;
+  }
+  .content {
+  padding-left: 120px;
+  color: #c7c7c7c9;
+}
+
+.content h2 {
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 36px;
+  padding-left: 10px;
+}
+
+.content p {
+  font-size: 18px;
+  line-height: 1.6;
+  padding-right: 100px;
+  color: black;
+}
+
+.btn {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  width: max-content;
+  outline: 0;
+  border: 2px solid black;
+  border-radius: 6px;
+  padding: 12px 20px;
+  margin-top: 26px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* Stacked frames */
+
+.stack {
+  position: relative;
+}
+
+.frame {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: 350px;
+  height: 500px;
+  border-radius: 0 15px 20px 0 rgba(0, 0, 0, 0.125);
+  transition: transform 0.6s;
+  user-select: none;
+}
+
+.frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.frame:nth-last-child(n + 5) {
+  --x: calc(-50% + 90px);
+  transform: translate(var(--x), -50%) scale(0.85);
+ 
+}
+
+.frame:nth-last-child(4) {
+  --x: calc(-50% + 60px);
+  transform: translate(var(--x), -50%) scale(0.9);
+}
+
+.frame:nth-last-child(3) {
+  --x: calc(-50% + 30px);
+  transform: translate(var(--x), -50%) scale(0.95);
+}
+
+.frame:nth-last-child(2) {
+  --x: calc(-50%);
+  transform: translate(var(--x), -50%) scale(1);
+}
+
+.frame:nth-last-child(1) {
+  --x: calc(-50% - 30px);
+  transform: translate(var(--x), -50%) scale(1.05);
+}
+
+/* .frame:nth-last-child(1) img {
+  box-shadow: 0 1px 5px 5px rgba(255, 193, 111, 0.5);
+} */
+
+.swap {
+  animation: swap 1.3s ease-out forwards;
+}
+
+@keyframes swap {
+  30% {
+    transform: translate(calc(var(--x) - 250px), -50%) scale(0.85) rotate(-5deg)
+      rotateY(65deg);
+  }
+  100% {
+    transform: translate(calc(var(--x) - 30px), -50%) scale(0.5);
+    z-index: -1;
+  }
+}
+
+/* Media queries for keyframes */
+
+@media (max-width: 1200px) {
+  @keyframes swap {
+    30% {
+      transform: translate(calc(var(--x) - 200px), -50%) scale(0.85)
+        rotate(-5deg) rotateY(65deg);
+    }
+
+    100% {
+      transform: translate(calc(var(--x) - 30px), -50%) scale(0.5);
+      z-index: -1;
+    }
+  }
+}
+
+@media (max-width: 1050px) {
+  @keyframes swap {
+    30% {
+      transform: translate(calc(var(--x) - 150px), -50%) scale(0.85)
+        rotate(-5deg) rotateY(65deg);
+    }
+
+    100% {
+      transform: translate(calc(var(--x) - 30px), -50%) scale(0.5);
+      z-index: -1;
+    }
+  }
+}
+
+/* Media queries for other classes */
+@media(max-width: 749px){
+  .container {
+    display: flex;
+    flex-direction: column;
+     min-height: 90vh;
+} 
+   .stack {
+        margin-top: 40px;
+    }
+ 
+}
+@media (max-width: 1200px) {
+  .content {
+    padding-left: 80px;
+  }
+
+  .content p {
+    padding-right: 40px;
+  }
+
+  .frame {
+    width: 250px;
+    height: 380px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .content {
+    padding-left: 60px;
+  }
+
+  .content p {
+    line-height: 1.5;
+  }
+
+  .frame {
+    width: 220px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 990px) {
+  .content p {
+    padding-right: 0;
+  }
+
+  .frame {
+    width: 200px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 950px) {
+  main {
+    grid-template-columns: 1fr;
+    grid-template-rows: 4fr 3fr;
+    grid-template-areas:
+      "stacked"
+      "content";
+  }
+
+  .content {
+    grid-area: content;
+    text-align: center;
+    padding: 0 90px;
+  }
+
+  .btn {
+    margin-bottom: 30px;
+  }
+
+  .stack {
+    grid-area: stacked;
+  }
+}
+
+@media (max-width: 650px) {
+  main {
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .content {
+    padding: 0 25px;
+  }
+
+  .content h1 {
+    padding-left: 0;
+  }
+
+  .btn {
+    padding: 8px 16px;
+  }
+
+  .frame {
+    width: 180px;
+    height: 260px;
+  }
+}
+  </style>
+
+  <div class="container">
+    <div class="content">
+      <h2> {{section.settings.main-text}} </h2>
+      <p> {{ section.settings.desc }} </p>
+      <button class="btn" href = {{section.settings.button_link}}> {{ section.settings.button_label }} </button>
+  </div>
+  <div class="stack">
+  <div class="frame">
+        <img src= {{section.settings.image-1 | image_url}} "width" : "100%", height: "100%" >
+  </div>
+     <div class="frame">
+        <img src= {{section.settings.image-2 | image_url}} "width" : "100%", height: "100%" >
+  </div>
+     <div class="frame">
+       <img src= {{section.settings.image-3 | image_url}} "width" : "100%", height: "100%" >
+  </div>
+     <div class="frame">
+       <img src= {{section.settings.image-4 | image_url}} "width" : "100%", height: "100%" >
+  </div>
+     <div class="frame">
+       <img src= {{section.settings.image-5 | image_url}} "width" : "100%", height: "100%" >
+  </div>
+     <div class="frame">
+        <img src= {{section.settings.image-6 | image_url}} "width" : "100%", height: "100%" >
+  </div>
+  </div>
+  </div>
+
+    <script>
+
+
+     const stack = document.querySelector(".stack");
+        const frames = Array.from(stack.children)
+          .reverse()
+          .filter((child) => child.classList.contains("frame"));
+        
+        frames.forEach((frame) => stack.appendChild(frame));
+  
+  function moveframe() {
+    const lastframe = stack.lastElementChild;
+    if (lastframe.classList.contains("frame")) {
+      lastframe.classList.add("swap");
+  
+      setTimeout(() => {
+        lastframe.classList.remove("swap");
+        stack.insertBefore(lastframe, stack.firstElementChild);
+      }, 1200);
+    }
+  }
+  
+  let autoplayInterval = setInterval(moveframe, 500);
+  
+  stack.addEventListener("click", function (e) {
+    const frame = e.target.closest(".frame");
+    if (frame && frame === stack.lastElementChild) {
+      frame.classList.add("swap");
+  
+      setTimeout(() => {
+        frame.classList.remove("swap");
+        stack.insertBefore(frame, stack.firstElementChild);
+      }, 1200);
+    }
+  });
+
+      
+    </script>
+
+{% schema %}
+  {
+    "name": "Autoplay frames With text",
+    "disabled_on": {
+      "groups": ["header", "footer"]
+    },
+    "settings": [
+      {
+      "type": "text",
+      "id": "main-text",
+      "label": " Your Heading",
+      "default" : "Heading"
+    },
+      {
+      "type": "inline_richtext",
+      "id": "desc",
+      "label": " description",
+      "default": "Description Here..."
+    },
+      {
+        "type": "text",
+        "id":"button_label",
+        "label": "Button Label",
+        "default": "button"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Link"
+      },
+    {
+      "type": "image_picker",
+      "id": "image-1",
+      "label": "Choose Your Image",    
+    },
+      {
+      "type": "image_picker",
+      "id": "image-2",
+      "label": "Choose Your Image",    
+    },
+      {
+      "type": "image_picker",
+      "id": "image-3",
+      "label": "Choose Your Image",    
+    },
+      {
+      "type": "image_picker",
+      "id": "image-4",
+      "label": "Choose Your Image",    
+    },
+      {
+      "type": "image_picker",
+      "id": "image-5",
+      "label": "Choose Your Image",    
+    },
+      {
+      "type": "image_picker",
+      "id": "image-6",
+      "label": "Choose Your Image",    
+    },
+      
+    ],
+    "presets": [
+      {
+        "name": "Autoplay frames with text"
+      }
+    ]
+  }
+{% endschema %}
